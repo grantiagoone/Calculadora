@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Juros Compostos</title>
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            margin-bottom: 10px;
+        }
+        input[type=number] {
+            width: 200px;
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+            box-shadow: inset 0 0 3px #ccc;
+        }
+        button {
+            display:block; 
+			margin-top :20px; 
+			padding :10px; 
+			background-color:#4CAF50; 
+			color:white; 
+			border:none; 
+			cursor:pointer
+		}
+		button:hover{
+			background-color:#3e8e41
+		}
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Calculadora de Juros Compostos</h1>
+        <p>Valor Inicial: <input type="number" id="valorInicial"></p>
+        <p>Taxa de Juros do Investimento ao Ano (em decimal): <input type="number" id="taxaJurosAno"></p>
+        <p>Valor do Aporte:<input type="number" id="valorAporte"></p>
+        <p>Reajuste Anual do Aporte (em decimal):<input type="number" id="reajusteAnualAporte"></p>
+         <p>Número de Anos:<input type="number" id="numAnos"></p>
+
+         <button onclick="calculaJurosCompostos()">Calcular</button>
+
+         <h2>Resultado:</h2>
+
+         <p id="resultado"></p>
+
+    </div>
+
+    <script type="text/javascript">
+       function calculaJurosCompostos() {
+           let valorInicial = parseFloat(document.getElementById("valorInicial").value);
+           let taxaJurosAno = parseFloat(document.getElementById("taxaJurosAno").value);
+           let valorAporte = parseFloat(document.getElementById("valorAporte").value);
+           let reajusteAnualAporte = parseFloat(document.getElementById("reajusteAnualAporte").value);
+           let numAnos = parseInt(document.getElementById("numAnos").value);
+
+           let saldo = valorInicial;
+
+           let taxaJurosMes = Math.pow(1 + taxaJurosAno, 1/12) - 1;
+
+           for (let ano = 1; ano <= numAnos; ano++) {
+
+               for (let mes = 1; mes <=12 ; mes++) {
+
+                   saldo *= (1 + taxaJurosMes);
+
+                   saldo += valorAporte;
+
+               }
+
+               valorAporte *= (1 + reajusteAnualAporte);
+
+           }
+
+          document.getElementById("resultado").innerHTML=`O saldo final após ${numAnos} anos é de R$ ${saldo.toFixed(2)}`;
+
+       }
+
+   </script>
+
+</body>
+
+</html>
